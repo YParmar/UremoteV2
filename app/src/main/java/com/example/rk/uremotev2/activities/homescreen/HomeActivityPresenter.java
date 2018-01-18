@@ -1,10 +1,8 @@
-package com.example.rk.uremotev2.homescreen;
+package com.example.rk.uremotev2.activities.homescreen;
 
 import android.content.Context;
 
 import com.example.rk.uremotev2.base.BasePresenter;
-import com.example.rk.uremotev2.database.DatabaseHelper;
-import com.example.rk.uremotev2.sharedpreference.PreferenceManager;
 
 /**
  * Created by RK on 9/10/2017.

@@ -1,4 +1,4 @@
-package com.example.rk.uremotev2.homescreen;
+package com.example.rk.uremotev2.activities.homescreen;
 
 import com.example.rk.uremotev2.base.IBasePresenter;
 import com.example.rk.uremotev2.base.IBaseView;

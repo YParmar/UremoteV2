@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.rk.uremotev2.homescreen.HomeActivity">
+    tools:context=".activities.homescreen.HomeActivity">
 
     <include layout="@layout/toolbar"
         android:id="@+id/toolbar"/>
@@ -21,7 +21,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <GridView
+            <Button
+                android:id="@+id/enable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Enable bluetooth" />
+
+            <!--<GridView
                 android:id="@+id/appliance_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -31,7 +37,7 @@
                 android:horizontalSpacing="@dimen/size_16dp"
                 android:stretchMode="columnWidth"
                 android:padding="@dimen/size_16dp"
-                />
+                />-->
 
         </LinearLayout>
     </ScrollView>

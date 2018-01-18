@@ -2,7 +2,6 @@ package com.example.rk.uremotev2.services;
 
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
@@ -14,6 +13,8 @@ import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.rk.uremotev2.Model.Device;
+import com.example.rk.uremotev2.classes.AppConstants;
 import com.example.rk.uremotev2.classes.AppController;
 
 import java.io.IOException;
@@ -25,8 +26,7 @@ import java.util.Vector;
 public class BluetoothSendService extends Service {
 
     private BluetoothAdapter mBluetoothAdapter;
-    public static final String BT_DEVICE = "btdevice";
-    public static final String SPP_UUID = "00001101-0000-1000-8000-00805F9B34FB";
+
     public static final int STATE_NONE = 0; // we're doing nothing
     public static final int STATE_LISTEN = 1; // now listening for incoming
     // connections
@@ -41,7 +41,7 @@ public class BluetoothSendService extends Service {
     public static int mState = STATE_NONE;
     public static String deviceName;
     public Vector<Byte> packdata = new Vector<Byte>(2048);
-    public static BluetoothClass.Device device = null;
+    public static Device device = null;
 
     @Override
     public void onCreate() {
@@ -61,7 +61,6 @@ public class BluetoothSendService extends Service {
         }
     }
 
-
     private final IBinder mBinder = new LocalBinder();
 
     @Override
@@ -69,20 +68,20 @@ public class BluetoothSendService extends Service {
         Log.d("PrinterService", "Onstart Command");
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (mBluetoothAdapter != null) {
-            device = (BluetoothClass.Device) intent.getSerializableExtra(BT_DEVICE);
+            device = intent.getParcelableExtra(AppConstants.BT_DEVICE);
             deviceName = device.getDeviceName();
-            String macAddress = device.getMacAddress();
+            String macAddress = device.getDeviceMacAddress();
             if (macAddress != null && macAddress.length() > 0) {
                 connectToDevice(macAddress);
             } else {
                 stopSelf();
-                return 0;
             }
         }
         String stopservice = intent.getStringExtra("stopservice");
         if (stopservice != null && stopservice.length() > 0) {
             stop();
         }
+
         return START_STICKY;
     }
 
@@ -108,7 +107,7 @@ public class BluetoothSendService extends Service {
     private void setState(int state) {
         BluetoothSendService.mState = state;
         if (mHandler != null) {
-            mHandler.obtainMessage(AbstractActivity.MESSAGE_STATE_CHANGE, state, -1).sendToTarget();
+            mHandler.obtainMessage(AppConstants.MESSAGE_STATE_CHANGE, state, -1).sendToTarget();
         }
     }
 
@@ -147,18 +146,18 @@ public class BluetoothSendService extends Service {
 
     private void connectionFailed() {
         BluetoothSendService.this.stop();
-        Message msg = mHandler.obtainMessage(AbstractActivity.MESSAGE_TOAST);
+        Message msg = mHandler.obtainMessage(AppConstants.MESSAGE_TOAST);
         Bundle bundle = new Bundle();
-        bundle.putString(AbstractActivity.TOAST, getString(R.string.error_connect_failed));
+        bundle.putString(AppConstants.TOAST, "Connection Failed");
         msg.setData(bundle);
         mHandler.sendMessage(msg);
     }
 
     private void connectionLost() {
         BluetoothSendService.this.stop();
-        Message msg = mHandler.obtainMessage(AbstractActivity.MESSAGE_TOAST);
+        Message msg = mHandler.obtainMessage(AppConstants.MESSAGE_TOAST);
         Bundle bundle = new Bundle();
-        bundle.putString(AbstractActivity.TOAST, getString(R.string.error_connect_lost));
+        bundle.putString(AppConstants.TOAST, "Connection Lost");
         msg.setData(bundle);
         mHandler.sendMessage(msg);
     }
@@ -212,7 +211,7 @@ public class BluetoothSendService extends Service {
             this.mmDevice = device;
             BluetoothSocket tmp = null;
             try {
-                tmp = device.createRfcommSocketToServiceRecord(UUID.fromString(SPP_UUID));
+                tmp = device.createRfcommSocketToServiceRecord(UUID.fromString(AppConstants.SPP_UUID));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -273,14 +272,9 @@ public class BluetoothSendService extends Service {
         public void run() {
             while (true) {
                 try {
-                    if (!encodeData(mmInStream)) {
-                        mState = STATE_NONE;
-                        connectionLost();
-                        break;
-                    } else {
-                    }
-                    // mHandler.obtainMessage(AbstractActivity.MESSAGE_READ,
-                    // bytes, -1, buffer).sendToTarget();
+                    mState = STATE_NONE;
+                    connectionLost();
+                    break;
                 } catch (Exception e) {
                     e.printStackTrace();
                     connectionLost();
@@ -299,7 +293,7 @@ public class BluetoothSendService extends Service {
                 mmOutStream.write(buffer);
 
                 // Share the sent message back to the UI Activity
-                mHandler.obtainMessage(AbstractActivity.MESSAGE_WRITE, buffer.length, -1, buffer).sendToTarget();
+                mHandler.obtainMessage(AppConstants.MESSAGE_WRITE, buffer.length, -1, buffer).sendToTarget();
             } catch (IOException e) {
                 Log.e("PrinterService", "Exception during write", e);
             }
@@ -335,6 +329,6 @@ public class BluetoothSendService extends Service {
     private void sendMsg(int flag) {
         Message msg = new Message();
         msg.what = flag;
-        handler.sendMessage(msg);
+        mHandler.sendMessage(msg);
     }
 }
