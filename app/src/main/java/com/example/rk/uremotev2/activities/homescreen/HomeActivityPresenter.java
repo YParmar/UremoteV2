@@ -1,8 +1,18 @@
 package com.example.rk.uremotev2.activities.homescreen;
 
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.support.v4.app.Fragment;
 
+import com.example.rk.uremotev2.activities.pairscreen.PairActivity;
 import com.example.rk.uremotev2.base.BasePresenter;
+import com.example.rk.uremotev2.services.BluetoothSendService;
+
+import java.util.UUID;
 
 /**
  * Created by RK on 9/10/2017.
@@ -14,5 +24,68 @@ public class HomeActivityPresenter extends BasePresenter<HomeActivityContract.Ho
 
     public HomeActivityPresenter(Context mContext) {
         super(mContext);
+    }
+
+    @Override
+    public void startConnection(BluetoothDevice device, UUID myUuidInsecure) {
+        BluetoothSendService bluetoothSendService = new BluetoothSendService(mContext);
+        bluetoothSendService.startClient(device, myUuidInsecure);
+    }
+
+    @Override
+    public void enableDisableBluetooth() {
+
+        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (bluetoothAdapter == null) {
+            mView.showMessage("Your device does not have bluetooth capabilities");
+        } else if (!bluetoothAdapter.isEnabled()) {
+            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            mContext.startActivity(enableIntent);
+            registerBluetoothReceiver();
+        } else {
+            bluetoothAdapter.disable();
+            registerBluetoothReceiver();
+        }
+    }
+
+    @Override
+    public void unregisterBluetoothBroadCastReceiver() {
+        try {
+            mContext.unregisterReceiver(bluetoothBroadcastReceiver);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void requestApplianceGridFragment(Fragment fragment) {
+        mView.setRequestedFragment(fragment);
+    }
+
+
+    private final BroadcastReceiver bluetoothBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action != null && action.equals(BluetoothAdapter.ACTION_STATE_CHANGED)) {
+                final int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR);
+
+                switch (state) {
+                    case BluetoothAdapter.STATE_OFF:
+                        mView.showMessage("Bluetooth turned off");
+                        break;
+
+                    case BluetoothAdapter.STATE_ON:
+                        mView.showMessage("Bluetooth turned on");
+                        mView.startPairActivityForResult();
+                        break;
+                }
+            }
+        }
+    };
+
+    private void registerBluetoothReceiver() {
+        IntentFilter BtIntent = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
+        mContext.registerReceiver(bluetoothBroadcastReceiver, BtIntent);
     }
 }

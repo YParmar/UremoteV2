@@ -8,4 +8,5 @@ public class AppConstants {
     public static final int MESSAGE_TOAST = 1;
     public static final int MESSAGE_STATE_CHANGE = 100;
     public static final int MESSAGE_WRITE = 101;
+    public static final String MAC_ADDRESS = "mac_address" ;
 }

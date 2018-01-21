@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.ApplianceGridFragment">
+
+    <GridView
+        android:id="@+id/appliance_grid_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnWidth="@dimen/size_4dp"
+        android:horizontalSpacing="@dimen/size_16dp"
+        android:numColumns="2"
+        android:padding="@dimen/size_16dp"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="@dimen/size_16dp" />
+
+</LinearLayout>

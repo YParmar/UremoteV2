@@ -10,36 +10,9 @@
     <include layout="@layout/toolbar"
         android:id="@+id/toolbar"/>
 
-    <ScrollView
-        android:id="@+id/scroll_view"
-        android:fillViewport="true"
+    <FrameLayout
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Button
-                android:id="@+id/enable"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Enable bluetooth" />
-
-            <!--<GridView
-                android:id="@+id/appliance_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:columnWidth="@dimen/size_4dp"
-                android:numColumns="2"
-                android:verticalSpacing="@dimen/size_16dp"
-                android:horizontalSpacing="@dimen/size_16dp"
-                android:stretchMode="columnWidth"
-                android:padding="@dimen/size_16dp"
-                />-->
-
-        </LinearLayout>
-    </ScrollView>
+        android:layout_height="match_parent"/>
 </LinearLayout>
 

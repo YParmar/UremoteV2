@@ -1,5 +1,6 @@
 package com.example.rk.uremotev2.adapters;
 
+import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -22,11 +23,13 @@ import butterknife.ButterKnife;
 public class PairDeviceAdapter extends RecyclerView.Adapter<PairDeviceAdapter.PairViewHolder>{
 
     private Context context;
-    private List<Device> deviceList;
+    private List<BluetoothDevice> deviceList;
+    private BluetoothListener bluetoothListener;
 
-    public PairDeviceAdapter(Context context, List<Device> deviceList) {
+    public PairDeviceAdapter(Context context, List<BluetoothDevice> deviceList, BluetoothListener bluetoothListener) {
         this.context = context;
         this.deviceList = deviceList;
+        this.bluetoothListener = bluetoothListener;
     }
 
     @Override
@@ -58,16 +61,18 @@ public class PairDeviceAdapter extends RecyclerView.Adapter<PairDeviceAdapter.Pa
             itemView.setOnClickListener(this);
         }
 
-        private void bindViews(Device device){
-            deviceName.setText(device.getDeviceName());
-            deviceAddress.setText(device.getDeviceMacAddress());
+        private void bindViews(BluetoothDevice device){
+            deviceName.setText(device.getName());
+            deviceAddress.setText(device.getAddress());
         }
 
         @Override
         public void onClick(View v) {
-            Intent bluetoothServiceIntent = new Intent(context, BluetoothSendService.class);
-            bluetoothServiceIntent.putExtra(AppConstants.BT_DEVICE, deviceList.get(getAdapterPosition()));
-            context.startService(bluetoothServiceIntent);
+            bluetoothListener.onDeviceSelected(deviceList.get(getAdapterPosition()).getAddress());
         }
+    }
+
+    public interface BluetoothListener {
+        void onDeviceSelected(String macAddress);
     }
 }
