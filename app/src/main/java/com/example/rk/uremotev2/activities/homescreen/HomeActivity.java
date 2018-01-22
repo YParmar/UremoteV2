@@ -15,6 +15,7 @@ import com.example.rk.uremotev2.activities.pairscreen.PairActivity;
 import com.example.rk.uremotev2.base.BaseActivity;
 import com.example.rk.uremotev2.classes.AppConstants;
 import com.example.rk.uremotev2.fragments.ApplianceGridFragment;
+import com.example.rk.uremotev2.fragments.ApplianceRemoteFragment;
 
 import java.util.UUID;
 
@@ -22,7 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class HomeActivity extends BaseActivity<HomeActivityPresenter> implements HomeActivityContract.HomeView,
-        ApplianceGridFragment.OnSelectAppliancesFragmentListener {
+        ApplianceGridFragment.OnSelectAppliancesFragmentListener, ApplianceRemoteFragment.OnApplianceRemoteFragmentListener{
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -40,7 +41,7 @@ public class HomeActivity extends BaseActivity<HomeActivityPresenter> implements
 
         initActionBar(toolbar, true, "Home");
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        mPresenter.requestApplianceGridFragment(new ApplianceGridFragment());
+        mPresenter.requestFragment(new ApplianceGridFragment());
         mPresenter.enableDisableBluetooth();
     }
 
@@ -70,5 +71,15 @@ public class HomeActivity extends BaseActivity<HomeActivityPresenter> implements
         getSupportFragmentManager()
                 .beginTransaction().replace(R.id.fragment_container, fragment)
                 .commit();
+    }
+
+    @Override
+    public void onButtonClicked(String data) {
+        mPresenter.sendData(data);
+    }
+
+    @Override
+    public void onGridClicked() {
+        mPresenter.requestFragment(new ApplianceRemoteFragment());
     }
 }

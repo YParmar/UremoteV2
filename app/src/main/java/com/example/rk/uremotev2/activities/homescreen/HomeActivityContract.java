@@ -28,6 +28,8 @@ public class HomeActivityContract {
 
         void unregisterBluetoothBroadCastReceiver();
 
-        void requestApplianceGridFragment(Fragment fragment);
+        void requestFragment(Fragment fragment);
+
+        void sendData(String s);
     }
 }

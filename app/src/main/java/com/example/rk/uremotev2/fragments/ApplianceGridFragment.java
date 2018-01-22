@@ -13,6 +13,7 @@ import com.example.rk.uremotev2.adapters.ApplianceGridAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnItemClick;
 
 public class ApplianceGridFragment extends Fragment {
 
@@ -46,6 +47,12 @@ public class ApplianceGridFragment extends Fragment {
         applianceGridView.setAdapter(applianceGridAdapter);
     }
 
+    @OnItemClick(R.id.appliance_grid_view)
+    void onGridItemClicked(){
+        mListener.onGridClicked();
+    }
+
+
 
     @Override
     public void onAttach(Context context) {
@@ -65,6 +72,6 @@ public class ApplianceGridFragment extends Fragment {
     }
 
     public interface OnSelectAppliancesFragmentListener {
-        //void onGridClicked();
+        void onGridClicked();
     }
 }

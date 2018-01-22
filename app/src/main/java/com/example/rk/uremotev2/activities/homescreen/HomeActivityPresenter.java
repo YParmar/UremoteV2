@@ -21,6 +21,7 @@ import java.util.UUID;
 public class HomeActivityPresenter extends BasePresenter<HomeActivityContract.HomeView>
         implements HomeActivityContract.HomePresenter {
 
+    private BluetoothSendService bluetoothSendService;
 
     public HomeActivityPresenter(Context mContext) {
         super(mContext);
@@ -28,7 +29,7 @@ public class HomeActivityPresenter extends BasePresenter<HomeActivityContract.Ho
 
     @Override
     public void startConnection(BluetoothDevice device, UUID myUuidInsecure) {
-        BluetoothSendService bluetoothSendService = new BluetoothSendService(mContext);
+        bluetoothSendService = new BluetoothSendService(mContext);
         bluetoothSendService.startClient(device, myUuidInsecure);
     }
 
@@ -58,8 +59,17 @@ public class HomeActivityPresenter extends BasePresenter<HomeActivityContract.Ho
     }
 
     @Override
-    public void requestApplianceGridFragment(Fragment fragment) {
+    public void requestFragment(Fragment fragment) {
         mView.setRequestedFragment(fragment);
+    }
+
+    @Override
+    public void sendData(String data) {
+        if(bluetoothSendService != null) {
+            bluetoothSendService.write(data.getBytes());
+        }else {
+            mView.showMessage("Please reconnect your device");
+        }
     }
 
 
