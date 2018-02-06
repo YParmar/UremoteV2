@@ -25,7 +25,7 @@ public class ApplianceGridFragment extends Fragment {
             R.drawable.speaker,
             R.drawable.chandelier,
             R.drawable.projector,
-            R.drawable.projector
+            R.drawable.fan
     };
 
     private OnSelectAppliancesFragmentListener mListener;

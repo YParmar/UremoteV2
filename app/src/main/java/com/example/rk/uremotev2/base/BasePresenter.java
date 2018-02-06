@@ -19,7 +19,7 @@ public class BasePresenter<V extends IBaseView> {
     public BasePresenter(Context mContext) {
         this.mContext = mContext;
         //this.mDbHelper = ;
-        //this.mPreferenceManager ;
+        this.mPreferenceManager = new PreferenceManager(mContext) ;
     }
 
     public boolean isViewAttached() {

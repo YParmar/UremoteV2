@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
+    <dimen name="size_0.5dp">0.5dp</dimen>
     <dimen name="size_1dp">1dp</dimen>
     <dimen name="size_2dp">2dp</dimen>
     <dimen name="size_4dp">4dp</dimen>
@@ -14,13 +15,44 @@
     <dimen name="size_20dp">20dp</dimen>
     <dimen name="size_22dp">22dp</dimen>
     <dimen name="size_24dp">24dp</dimen>
+    <dimen name="size_26dp">26dp</dimen>
     <dimen name="size_28dp">28dp</dimen>
     <dimen name="size_30dp">30dp</dimen>
     <dimen name="size_32dp">32dp</dimen>
     <dimen name="size_34dp">34dp</dimen>
+    <dimen name="size_38dp">38dp</dimen>
+    <dimen name="size_40dp">40dp</dimen>
+    <dimen name="size_48dp">48dp</dimen>
     <dimen name="size_50dp">50dp</dimen>
+    <dimen name="size_60dp">60dp</dimen>
+    <dimen name="size_64dp">64dp</dimen>
     <dimen name="size_70dp">70dp</dimen>
+    <dimen name="size_80dp">80dp</dimen>
+    <dimen name="size_90dp">90dp</dimen>
     <dimen name="size_100dp">100dp</dimen>
+    <dimen name="size_110dp">110dp</dimen>
+    <dimen name="size_120dp">120dp</dimen>
+    <dimen name="size_130dp">130dp</dimen>
+    <dimen name="size_150dp">150dp</dimen>
+    <dimen name="size_200dp">200dp</dimen>
+    <dimen name="size_210dp">210dp</dimen>
+    <dimen name="size_220dp">220dp</dimen>
+    <dimen name="size_230dp">230dp</dimen>
+    <dimen name="size_250dp">250dp</dimen>
+    <dimen name="size_270dp">270dp</dimen>
+    <dimen name="size_300dp">300dp</dimen>
+
+    <!-- Text Size -->
+    <dimen name="text_size_16">16sp</dimen>
+    <dimen name="text_size_24">24sp</dimen>
+    <dimen name="text_size_18">18sp</dimen>
+    <dimen name="text_size_14">14sp</dimen>
+    <dimen name="text_size_12">12sp</dimen>
+    <dimen name="text_size_10">10sp</dimen>
+    <dimen name="text_size_8">8sp</dimen>
+    <dimen name="text_size_6">6sp</dimen>
+    <dimen name="text_size_20">20sp</dimen>
+    <dimen name="text_size_22">22sp</dimen>
 
     <dimen name="design_fab_size_mini" tools:override="true">80dp</dimen>
     <dimen name="design_fab_content_size" tools:override="true">48dp</dimen>

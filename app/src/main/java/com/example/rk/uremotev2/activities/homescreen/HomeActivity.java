@@ -29,7 +29,6 @@ public class HomeActivity extends BaseActivity<HomeActivityPresenter> implements
     Toolbar toolbar;
 
     private BluetoothAdapter bluetoothAdapter;
-    private static final UUID MY_UUID_INSECURE = UUID.fromString(AppConstants.SPP_UUID);
     public static final int BT_DEVICE_RESULT_CODE = 100;
 
     @Override
@@ -56,7 +55,7 @@ public class HomeActivity extends BaseActivity<HomeActivityPresenter> implements
         super.onActivityResult(requestCode, resultCode, data);
         if (data != null && resultCode == BT_DEVICE_RESULT_CODE) {
             BluetoothDevice device = bluetoothAdapter.getRemoteDevice(data.getStringExtra(AppConstants.MAC_ADDRESS));
-            mPresenter.startConnection(device, MY_UUID_INSECURE);
+            mPresenter.startConnection(device, AppConstants.MY_UUID_INSECURE);
         }
     }
 
@@ -68,8 +67,9 @@ public class HomeActivity extends BaseActivity<HomeActivityPresenter> implements
 
     @Override
     public void setRequestedFragment(Fragment fragment) {
-        getSupportFragmentManager()
-                .beginTransaction().replace(R.id.fragment_container, fragment)
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left)
+                .replace(R.id.fragment_container, fragment)
                 .commit();
     }
 
@@ -81,5 +81,15 @@ public class HomeActivity extends BaseActivity<HomeActivityPresenter> implements
     @Override
     public void onGridClicked() {
         mPresenter.requestFragment(new ApplianceRemoteFragment());
+    }
+
+    @Override
+    public void onBackPressed() {
+        Fragment currentLoadedFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+        if (currentLoadedFragment instanceof ApplianceRemoteFragment) {
+            mPresenter.requestFragment(new ApplianceGridFragment());
+        } else {
+            super.onBackPressed();
+        }
     }
 }

@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 
 import com.example.rk.uremotev2.activities.pairscreen.PairActivity;
 import com.example.rk.uremotev2.base.BasePresenter;
+import com.example.rk.uremotev2.classes.AppConstants;
 import com.example.rk.uremotev2.services.BluetoothSendService;
 
 import java.util.UUID;
@@ -43,9 +44,15 @@ public class HomeActivityPresenter extends BasePresenter<HomeActivityContract.Ho
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             mContext.startActivity(enableIntent);
             registerBluetoothReceiver();
-        } else {
-            bluetoothAdapter.disable();
-            registerBluetoothReceiver();
+        }else {
+
+            String macAddress = mPreferenceManager.getStringForKey(AppConstants.MAC_ADDRESS,"");
+            if(macAddress != null && !macAddress.isEmpty()){
+                BluetoothDevice device = bluetoothAdapter.getRemoteDevice(macAddress);
+                startConnection(device, AppConstants.MY_UUID_INSECURE);
+            }else {
+                //TODO open pair activity here if bluetooth is on but no device is choosen to connect
+            }
         }
     }
 
@@ -68,7 +75,7 @@ public class HomeActivityPresenter extends BasePresenter<HomeActivityContract.Ho
         if(bluetoothSendService != null) {
             bluetoothSendService.write(data.getBytes());
         }else {
-            mView.showMessage("Please reconnect your device");
+            enableDisableBluetooth();
         }
     }
 

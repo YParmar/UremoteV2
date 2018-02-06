@@ -7,9 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.example.rk.uremotev2.R;
-
 import java.util.List;
 
 import butterknife.BindView;
@@ -43,7 +41,7 @@ public class LightsRecyclerAdapter extends RecyclerView.Adapter<LightsRecyclerAd
         return lightsName.size();
     }
 
-    public class LightsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class LightsViewHolder extends RecyclerView.ViewHolder{
 
         @BindView(R.id.light_name)
         TextView lightsName;
@@ -53,22 +51,20 @@ public class LightsRecyclerAdapter extends RecyclerView.Adapter<LightsRecyclerAd
         public LightsViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            lightIcon.setOnClickListener(this);
         }
 
         private void bindViews(String name) {
             lightsName.setText(name);
-        }
-
-        @Override
-        public void onClick(View v) {
-
-            if (v.getId() == R.id.light_icon) {
-                if (onLightsAdapterListener != null) {
-                    onLightsAdapterListener.onPowerButtonClicked(String.valueOf(getAdapterPosition() + 1));
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (onLightsAdapterListener != null) {
+                        onLightsAdapterListener.onPowerButtonClicked(String.valueOf(getAdapterPosition() + 1));
+                    }
                 }
-            }
+            });
         }
+
     }
 
     public interface OnLightsAdapterListener {

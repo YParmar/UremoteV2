@@ -1,5 +1,7 @@
 package com.example.rk.uremotev2.classes;
 
+import java.util.UUID;
+
 public class AppConstants {
 
     public static final String BT_DEVICE = "btdevice";
@@ -9,4 +11,6 @@ public class AppConstants {
     public static final int MESSAGE_STATE_CHANGE = 100;
     public static final int MESSAGE_WRITE = 101;
     public static final String MAC_ADDRESS = "mac_address" ;
+
+    public static final UUID MY_UUID_INSECURE = UUID.fromString(SPP_UUID);
 }

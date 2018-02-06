@@ -9,5 +9,6 @@ public class PairActivityContract {
     }
 
     interface PairPresenter extends IBasePresenter {
+        void saveDeviceMacToPreference(String macAddress);
     }
 }

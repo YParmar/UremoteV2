@@ -9,11 +9,14 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.rk.uremotev2.classes.AppConstants;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.util.UUID;
+import static com.example.rk.uremotev2.classes.AppConstants.MY_UUID_INSECURE;
 
 /**
  * Created by User on 12/21/2016.
@@ -24,9 +27,6 @@ public class BluetoothSendService {
     private static final String TAG = "BluetoothConnectionServ";
 
     private static final String appName = "MYAPP";
-
-    private static final UUID MY_UUID_INSECURE =
-            UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     private final BluetoothAdapter mBluetoothAdapter;
     Context mContext;
