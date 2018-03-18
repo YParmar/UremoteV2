@@ -48,11 +48,9 @@ public class ApplianceGridFragment extends Fragment {
     }
 
     @OnItemClick(R.id.appliance_grid_view)
-    void onGridItemClicked(){
-        mListener.onGridClicked();
+    void onGridItemClicked(int position){
+        mListener.onGridClicked(position);
     }
-
-
 
     @Override
     public void onAttach(Context context) {
@@ -72,6 +70,6 @@ public class ApplianceGridFragment extends Fragment {
     }
 
     public interface OnSelectAppliancesFragmentListener {
-        void onGridClicked();
+        void onGridClicked(int position);
     }
 }
