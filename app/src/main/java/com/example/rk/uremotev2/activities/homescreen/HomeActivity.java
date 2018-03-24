@@ -25,6 +25,9 @@ public class HomeActivity extends BaseActivity<HomeActivityPresenter> implements
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+    private ApplianceListFragment applianceListFragment = new ApplianceListFragment();
+    private ApplianceRemoteFragment applianceRemoteFragment = new ApplianceRemoteFragment();
+
     private BluetoothAdapter bluetoothAdapter;
     public static final int BT_DEVICE_RESULT_CODE = 100;
 
@@ -78,31 +81,45 @@ public class HomeActivity extends BaseActivity<HomeActivityPresenter> implements
     @Override
     public void onGridClicked(int position) {
 
+        Bundle bundle  = new Bundle();
+
         switch (position) {
             case 0:
                 setToolbarTitle("Television");
-                mPresenter.requestFragment(new ApplianceRemoteFragment());
+                bundle.putString(AppConstants.BUNDLE_STRING, AppConstants.TELEVISION);
+                applianceRemoteFragment.setArguments(bundle);
+                mPresenter.requestFragment(applianceRemoteFragment);
                 break;
             case 1:
                 setToolbarTitle("Air Conditioner");
-                mPresenter.requestFragment(new ApplianceRemoteFragment());
+                bundle.putString(AppConstants.BUNDLE_STRING, AppConstants.AIR_CONDITIONER);
+                applianceRemoteFragment.setArguments(bundle);
+                mPresenter.requestFragment(applianceRemoteFragment);
                 break;
             case 2:
                 setToolbarTitle("Music System");
-                mPresenter.requestFragment(new ApplianceRemoteFragment());
+                bundle.putString(AppConstants.BUNDLE_STRING, AppConstants.MUSIC_SYSTEM);
+                applianceRemoteFragment.setArguments(bundle);
+                mPresenter.requestFragment(applianceRemoteFragment);
                 break;
             case 4:
                 setToolbarTitle("Projector");
-                mPresenter.requestFragment(new ApplianceRemoteFragment());
+                bundle.putString(AppConstants.BUNDLE_STRING, AppConstants.PROJECTOR);
+                applianceRemoteFragment.setArguments(bundle);
+                mPresenter.requestFragment(applianceRemoteFragment);
                 break;
 
             case 3:
                 setToolbarTitle("Lights");
-                mPresenter.requestFragment(new ApplianceListFragment());
+                bundle.putString(AppConstants.BUNDLE_STRING, AppConstants.LIGHTS);
+                applianceListFragment.setArguments(bundle);
+                mPresenter.requestFragment(applianceListFragment);
                 break;
             case 5:
                 setToolbarTitle("Fans");
-                mPresenter.requestFragment(new ApplianceListFragment());
+                bundle.putString(AppConstants.BUNDLE_STRING, AppConstants.FANS);
+                applianceListFragment.setArguments(bundle);
+                mPresenter.requestFragment(applianceListFragment);
                 break;
         }
 

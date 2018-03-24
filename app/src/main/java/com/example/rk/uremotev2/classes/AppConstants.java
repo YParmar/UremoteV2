@@ -13,4 +13,12 @@ public class AppConstants {
     public static final String MAC_ADDRESS = "mac_address" ;
 
     public static final UUID MY_UUID_INSECURE = UUID.fromString(SPP_UUID);
+    public static final String TELEVISION = "television";
+    public static final String AIR_CONDITIONER = "air_conditioner";
+    public static final String MUSIC_SYSTEM = "music_system";
+    public static final String PROJECTOR = "projector";
+    public static final String LIGHTS = "lights";
+    public static final String FANS = "fans";
+
+    public static final String BUNDLE_STRING = "bundle_string";
 }
