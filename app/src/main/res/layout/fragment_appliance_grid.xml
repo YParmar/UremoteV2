@@ -5,6 +5,11 @@
     android:layout_height="match_parent"
     tools:context=".fragments.ApplianceGridFragment">
 
+    <!--<android.support.v7.widget.RecyclerView
+        android:id="@+id/home_grid_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>-->
+
     <GridView
         android:id="@+id/appliance_grid_view"
         android:layout_width="match_parent"

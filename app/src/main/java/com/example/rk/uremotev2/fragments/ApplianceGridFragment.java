@@ -3,6 +3,8 @@ package com.example.rk.uremotev2.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +12,18 @@ import android.widget.GridView;
 
 import com.example.rk.uremotev2.R;
 import com.example.rk.uremotev2.adapters.ApplianceGridAdapter;
+import com.example.rk.uremotev2.adapters.HomeGridRecylerAdapter;
+
+import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
 
 public class ApplianceGridFragment extends Fragment {
+
+    /*@BindView(R.id.home_grid_recyclerview)
+    RecyclerView homeGridRecyclerview;*/
 
     @BindView(R.id.appliance_grid_view)
     GridView applianceGridView;
@@ -42,6 +50,12 @@ public class ApplianceGridFragment extends Fragment {
     }
 
     void initFragment(){
+
+        /*HomeGridRecylerAdapter adapter = new HomeGridRecylerAdapter(getContext(), applianceIcons, getResources().getStringArray(R.array.appliance_names))
+        homeGridRecyclerview.setHasFixedSize(true);
+        homeGridRecyclerview.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        homeGridRecyclerview.setAdapter(adapter);*/
+
         ApplianceGridAdapter applianceGridAdapter = new ApplianceGridAdapter(getContext(),
                 getResources().getStringArray(R.array.appliance_names), applianceIcons);
         applianceGridView.setAdapter(applianceGridAdapter);

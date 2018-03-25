@@ -10,10 +10,18 @@ import android.support.v4.app.Fragment;
 
 import com.example.rk.uremotev2.activities.pairscreen.PairActivity;
 import com.example.rk.uremotev2.base.BasePresenter;
+import com.example.rk.uremotev2.base.RetroClient;
 import com.example.rk.uremotev2.classes.AppConstants;
+import com.example.rk.uremotev2.model.Datum;
+import com.example.rk.uremotev2.model.FeedSwitchRequest;
+import com.example.rk.uremotev2.model.FeedSwitchResponse;
 import com.example.rk.uremotev2.services.BluetoothSendService;
 
 import java.util.UUID;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by RK on 9/10/2017.
@@ -44,13 +52,13 @@ public class HomeActivityPresenter extends BasePresenter<HomeActivityContract.Ho
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             mContext.startActivity(enableIntent);
             registerBluetoothReceiver();
-        }else {
+        } else {
 
-            String macAddress = mPreferenceManager.getStringForKey(AppConstants.MAC_ADDRESS,"");
-            if(macAddress != null && !macAddress.isEmpty()){
+            String macAddress = mPreferenceManager.getStringForKey(AppConstants.MAC_ADDRESS, "");
+            if (macAddress != null && !macAddress.isEmpty()) {
                 BluetoothDevice device = bluetoothAdapter.getRemoteDevice(macAddress);
                 startConnection(device, AppConstants.MY_UUID_INSECURE);
-            }else {
+            } else {
                 //TODO open pair activity here if bluetooth is on but no device is choosen to connect
             }
         }
@@ -60,7 +68,7 @@ public class HomeActivityPresenter extends BasePresenter<HomeActivityContract.Ho
     public void unregisterBluetoothBroadCastReceiver() {
         try {
             mContext.unregisterReceiver(bluetoothBroadcastReceiver);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -72,10 +80,54 @@ public class HomeActivityPresenter extends BasePresenter<HomeActivityContract.Ho
 
     @Override
     public void sendData(String data) {
-        if(bluetoothSendService != null) {
+        if (bluetoothSendService != null) {
             bluetoothSendService.write(data.getBytes());
-        }else {
+        } else {
             enableDisableBluetooth();
+        }
+    }
+
+    @Override
+    public void requestConnectionDialog() {
+        mView.showConnectionDialog();
+    }
+
+    @Override
+    public void callSwitchOnOffApiCall(String switchType, String value) {
+        if (switchType != null && !switchType.isEmpty() && value != null && !value.isEmpty()) {
+
+            try {
+
+                Datum datum = new Datum();
+                datum.setValue(value);
+
+                FeedSwitchRequest feedSwitchRequest = new FeedSwitchRequest();
+                feedSwitchRequest.setDatum(datum);
+
+                RetroClient.getRetroClientWithInterceptor(RetroClient.getOkHttpClient(mContext))
+                        .doFeedSwitchOnOFApiCall(switchType, feedSwitchRequest)
+                        .enqueue(new Callback<FeedSwitchResponse>() {
+                            @Override
+                            public void onResponse(Call<FeedSwitchResponse> call, Response<FeedSwitchResponse> response) {
+                                if (response.isSuccessful()) {
+                                    mView.showMessage("Switch stated changed");
+                                } else {
+                                    mView.showMessage(response.message());
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<FeedSwitchResponse> call, Throwable t) {
+                                mView.showMessage(t.getMessage());
+                            }
+                        });
+            } catch (RetroClient.NotConnectedToInternetException e) {
+                e.printStackTrace();
+            }
+
+
+        } else {
+            mView.showMessage("Something went wrong");
         }
     }
 

@@ -19,6 +19,8 @@ public class HomeActivityContract {
         void startPairActivityForResult();
 
         void setRequestedFragment(Fragment fragment);
+
+        void showConnectionDialog();
     }
 
     interface HomePresenter extends IBasePresenter {
@@ -31,5 +33,9 @@ public class HomeActivityContract {
         void requestFragment(Fragment fragment);
 
         void sendData(String s);
+
+        void requestConnectionDialog();
+
+        void callSwitchOnOffApiCall(String switchType, String value);
     }
 }

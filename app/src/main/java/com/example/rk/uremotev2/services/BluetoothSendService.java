@@ -271,7 +271,7 @@ public class BluetoothSendService {
             try {
                 mmOutStream.write(bytes);
             } catch (IOException e) {
-                Log.e(TAG, "write: Error writing to output stream. " + e.getMessage() );
+
             }
         }
 

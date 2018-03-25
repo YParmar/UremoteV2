@@ -21,4 +21,7 @@ public class AppConstants {
     public static final String FANS = "fans";
 
     public static final String BUNDLE_STRING = "bundle_string";
+    public static final String ADAFRUIT_API_KEY = "4e6a1d5d744b44fd88032965e2a2e396";
+    public static final String WIFI = "wifi";
+    public static final String BLUETOOTH = "bluetooth";
 }

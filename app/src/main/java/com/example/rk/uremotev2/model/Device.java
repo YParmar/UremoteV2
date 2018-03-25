@@ -1,4 +1,4 @@
-package com.example.rk.uremotev2.Model;
+package com.example.rk.uremotev2.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

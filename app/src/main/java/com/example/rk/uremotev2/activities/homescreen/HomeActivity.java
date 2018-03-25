@@ -1,7 +1,9 @@
 package com.example.rk.uremotev2.activities.homescreen;
 
+import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -25,6 +27,8 @@ public class HomeActivity extends BaseActivity<HomeActivityPresenter> implements
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+    public static String isWifiOrBluetooth = "";
+
     private ApplianceListFragment applianceListFragment = new ApplianceListFragment();
     private ApplianceRemoteFragment applianceRemoteFragment = new ApplianceRemoteFragment();
 
@@ -41,7 +45,11 @@ public class HomeActivity extends BaseActivity<HomeActivityPresenter> implements
         initActionBar(toolbar, true, "Home");
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         mPresenter.requestFragment(new ApplianceGridFragment());
-        mPresenter.enableDisableBluetooth();
+
+        mPresenter.requestConnectionDialog();
+
+
+        //mPresenter.enableDisableBluetooth();
     }
 
     @Override
@@ -71,6 +79,28 @@ public class HomeActivity extends BaseActivity<HomeActivityPresenter> implements
                 .setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left)
                 .replace(R.id.fragment_container, fragment)
                 .commit();
+    }
+
+    @Override
+    public void showConnectionDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Choose Connection Type");
+        builder.setMessage("You need to choose the connection type in order to connect to the remote device.");
+        builder.setPositiveButton("WIFI", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                isWifiOrBluetooth = AppConstants.WIFI;
+            }
+        });
+
+        builder.setNegativeButton("BLUETOOTH", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                isWifiOrBluetooth = AppConstants.BLUETOOTH;
+                mPresenter.enableDisableBluetooth();
+            }
+        });
+        builder.create().show();
     }
 
     @Override
@@ -140,6 +170,11 @@ public class HomeActivity extends BaseActivity<HomeActivityPresenter> implements
     public void onRemoteButtonClicked(String data) {
         mPresenter.sendData(data);
         showMessage(data);
+    }
+
+    @Override
+    public void callSwitchOnOffApi(String switchType, String value) {
+        mPresenter.callSwitchOnOffApiCall(switchType, value);
     }
 
     private void setToolbarTitle(String title) {

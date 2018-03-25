@@ -1,6 +1,5 @@
 package com.example.rk.uremotev2.fragments;
 
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.rk.uremotev2.R;
+import com.example.rk.uremotev2.activities.homescreen.HomeActivity;
 import com.example.rk.uremotev2.classes.AppConstants;
 
 import butterknife.BindView;
@@ -50,7 +50,7 @@ public class ApplianceRemoteFragment extends Fragment {
     }
 
 
-    void initFragment(){
+    void initFragment() {
         switch (bundleString) {
 
             case AppConstants.TELEVISION:
@@ -77,7 +77,6 @@ public class ApplianceRemoteFragment extends Fragment {
 
     @OnClick(R.id.power_button)
     void OnClickPowerButton() {
-
         switch (bundleString) {
 
             case AppConstants.TELEVISION:
@@ -100,45 +99,92 @@ public class ApplianceRemoteFragment extends Fragment {
 
     @OnClick(R.id.volume_up)
     void OnClickVolumeUp() {
-        switch (bundleString) {
 
-            case AppConstants.TELEVISION:
-                onRemoteFragmentListener.onRemoteButtonClicked("7");
-                break;
 
-            case AppConstants.AIR_CONDITIONER:
-                onRemoteFragmentListener.onRemoteButtonClicked("C");
-                break;
+        if (HomeActivity.isWifiOrBluetooth.equals(AppConstants.WIFI)) {
+            switch (bundleString) {
+                case AppConstants.TELEVISION:
+                    onRemoteFragmentListener.callSwitchOnOffApi("switch1", "0");
+                    break;
 
-            case AppConstants.MUSIC_SYSTEM:
-                onRemoteFragmentListener.onRemoteButtonClicked("H");
-                break;
+                case AppConstants.AIR_CONDITIONER:
+                    //onRemoteFragmentListener.callSwitchOnOffApi("switch1", "1");
+                    break;
 
-            case AppConstants.PROJECTOR:
-                onRemoteFragmentListener.onRemoteButtonClicked("2");
-                break;
+                case AppConstants.MUSIC_SYSTEM:
+                    //onRemoteFragmentListener.callSwitchOnOffApi("switch1", "1");
+                    break;
+
+                case AppConstants.PROJECTOR:
+                    //onRemoteFragmentListener.callSwitchOnOffApi("switch1", "1");
+                    break;
+            }
+        } else {
+
+
+            switch (bundleString) {
+
+                case AppConstants.TELEVISION:
+                    onRemoteFragmentListener.onRemoteButtonClicked("7");
+                    break;
+
+                case AppConstants.AIR_CONDITIONER:
+                    onRemoteFragmentListener.onRemoteButtonClicked("C");
+                    break;
+
+                case AppConstants.MUSIC_SYSTEM:
+                    onRemoteFragmentListener.onRemoteButtonClicked("H");
+                    break;
+
+                case AppConstants.PROJECTOR:
+                    onRemoteFragmentListener.onRemoteButtonClicked("2");
+                    break;
+            }
         }
     }
 
     @OnClick(R.id.volume_down)
     void OnClickVolumeDown() {
-        switch (bundleString) {
 
-            case AppConstants.TELEVISION:
-                onRemoteFragmentListener.onRemoteButtonClicked("8");
-                break;
 
-            case AppConstants.AIR_CONDITIONER:
-                onRemoteFragmentListener.onRemoteButtonClicked("D");
-                break;
+        if (HomeActivity.isWifiOrBluetooth.equals(AppConstants.WIFI)) {
+            switch (bundleString) {
+                case AppConstants.TELEVISION:
+                    onRemoteFragmentListener.callSwitchOnOffApi("switch1", "1");
+                    break;
 
-            case AppConstants.MUSIC_SYSTEM:
-                onRemoteFragmentListener.onRemoteButtonClicked("I");
-                break;
+                case AppConstants.AIR_CONDITIONER:
+                    //onRemoteFragmentListener.callSwitchOnOffApi("switch1", "1");
+                    break;
 
-            case AppConstants.PROJECTOR:
-                onRemoteFragmentListener.onRemoteButtonClicked("3");
-                break;
+                case AppConstants.MUSIC_SYSTEM:
+                    //onRemoteFragmentListener.callSwitchOnOffApi("switch1", "1");
+                    break;
+
+                case AppConstants.PROJECTOR:
+                    //onRemoteFragmentListener.callSwitchOnOffApi("switch1", "1");
+                    break;
+            }
+        } else {
+
+            switch (bundleString) {
+
+                case AppConstants.TELEVISION:
+                    onRemoteFragmentListener.onRemoteButtonClicked("8");
+                    break;
+
+                case AppConstants.AIR_CONDITIONER:
+                    onRemoteFragmentListener.onRemoteButtonClicked("D");
+                    break;
+
+                case AppConstants.MUSIC_SYSTEM:
+                    onRemoteFragmentListener.onRemoteButtonClicked("I");
+                    break;
+
+                case AppConstants.PROJECTOR:
+                    onRemoteFragmentListener.onRemoteButtonClicked("3");
+                    break;
+            }
         }
     }
 
@@ -166,8 +212,8 @@ public class ApplianceRemoteFragment extends Fragment {
 
     @OnClick(R.id.channel_down)
     void OnClickChannelDown() {
-        switch (bundleString) {
 
+        switch (bundleString) {
             case AppConstants.TELEVISION:
                 onRemoteFragmentListener.onRemoteButtonClicked("A");
                 break;
@@ -183,7 +229,7 @@ public class ApplianceRemoteFragment extends Fragment {
             case AppConstants.PROJECTOR:
                 onRemoteFragmentListener.onRemoteButtonClicked("5");
                 break;
-        }
+        }/**/
     }
 
     @Override
@@ -205,6 +251,7 @@ public class ApplianceRemoteFragment extends Fragment {
 
     public interface OnRemoteFragmentListener {
         void onRemoteButtonClicked(String data);
-    }
 
+        void callSwitchOnOffApi(String switchType, String value);
+    }
 }
