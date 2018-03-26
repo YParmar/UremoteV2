@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 
+import com.bumptech.glide.Glide;
 import com.example.rk.uremotev2.R;
 import com.example.rk.uremotev2.adapters.ApplianceGridAdapter;
 import com.example.rk.uremotev2.adapters.HomeGridRecylerAdapter;
@@ -22,18 +23,18 @@ import butterknife.OnItemClick;
 
 public class ApplianceGridFragment extends Fragment {
 
-    /*@BindView(R.id.home_grid_recyclerview)
-    RecyclerView homeGridRecyclerview;*/
+    @BindView(R.id.home_grid_recyclerview)
+    RecyclerView homeGridRecyclerview;
 
-    @BindView(R.id.appliance_grid_view)
-    GridView applianceGridView;
+    /*@BindView(R.id.appliance_grid_view)
+    GridView applianceGridView;*/
 
-    private int[] applianceIcons = {R.drawable.television_red,
-            R.drawable.air_conditioner,
-            R.drawable.speaker,
-            R.drawable.chandelier,
+    private int[] applianceIcons = {R.drawable.tv,
+            R.drawable.ac,
+            R.drawable.music_system,
+            R.drawable.lights,
             R.drawable.projector,
-            R.drawable.fan
+            R.drawable.fans
     };
 
     private OnSelectAppliancesFragmentListener mListener;
@@ -51,20 +52,21 @@ public class ApplianceGridFragment extends Fragment {
 
     void initFragment(){
 
-        /*HomeGridRecylerAdapter adapter = new HomeGridRecylerAdapter(getContext(), applianceIcons, getResources().getStringArray(R.array.appliance_names))
+        HomeGridRecylerAdapter adapter = new HomeGridRecylerAdapter(getContext(), applianceIcons,
+                getResources().getStringArray(R.array.appliance_names), Glide.with(this));
         homeGridRecyclerview.setHasFixedSize(true);
         homeGridRecyclerview.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        homeGridRecyclerview.setAdapter(adapter);*/
+        homeGridRecyclerview.setAdapter(adapter);
 
-        ApplianceGridAdapter applianceGridAdapter = new ApplianceGridAdapter(getContext(),
+        /*ApplianceGridAdapter applianceGridAdapter = new ApplianceGridAdapter(getContext(),
                 getResources().getStringArray(R.array.appliance_names), applianceIcons);
-        applianceGridView.setAdapter(applianceGridAdapter);
+        applianceGridView.setAdapter(applianceGridAdapter);*/
     }
 
-    @OnItemClick(R.id.appliance_grid_view)
+    /*@OnItemClick(R.id.appliance_grid_view)
     void onGridItemClicked(int position){
         mListener.onGridClicked(position);
-    }
+    }*/
 
     @Override
     public void onAttach(Context context) {

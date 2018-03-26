@@ -3,14 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".fragments.ApplianceGridFragment">
 
-    <!--<android.support.v7.widget.RecyclerView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/home_grid_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>-->
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/size_8dp"
+        android:paddingLeft="@dimen/size_8dp" />
 
-    <GridView
+    <!--<GridView
         android:id="@+id/appliance_grid_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,6 +22,6 @@
         android:numColumns="2"
         android:padding="@dimen/size_16dp"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="@dimen/size_16dp" />
+        android:verticalSpacing="@dimen/size_16dp" />-->
 
 </LinearLayout>

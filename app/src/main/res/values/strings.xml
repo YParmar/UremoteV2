@@ -13,13 +13,4 @@
         <item>Fans</item>
     </string-array>
 
-    <integer-array name="appliance_icons">
-        <item>@drawable/television</item>
-        <item>@drawable/air_conditioner</item>
-        <item>@drawable/speaker</item>
-        <item>@drawable/lamp</item>
-        <item>@drawable/projector</item>
-        <item>@drawable/lamp</item>
-    </integer-array>
-
 </resources>
