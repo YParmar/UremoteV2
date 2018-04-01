@@ -10,8 +10,9 @@
         android:id="@+id/home_grid_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="@dimen/size_8dp"
-        android:paddingLeft="@dimen/size_8dp" />
+        android:paddingTop="@dimen/size_16dp"
+        android:paddingLeft="@dimen/size_16dp"
+        android:clipToPadding="false" />
 
     <!--<GridView
         android:id="@+id/appliance_grid_view"

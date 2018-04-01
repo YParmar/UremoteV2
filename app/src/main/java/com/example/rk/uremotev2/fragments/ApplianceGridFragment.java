@@ -21,7 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
 
-public class ApplianceGridFragment extends Fragment {
+public class ApplianceGridFragment extends Fragment implements HomeGridRecylerAdapter.HomeGridRecyclerListener {
 
     @BindView(R.id.home_grid_recyclerview)
     RecyclerView homeGridRecyclerview;
@@ -29,12 +29,12 @@ public class ApplianceGridFragment extends Fragment {
     /*@BindView(R.id.appliance_grid_view)
     GridView applianceGridView;*/
 
-    private int[] applianceIcons = {R.drawable.tv,
-            R.drawable.ac,
-            R.drawable.music_system,
-            R.drawable.lights,
+    private int[] applianceIcons = {R.drawable.television_red,
+            R.drawable.air_conditioner,
+            R.drawable.music,
+            R.drawable.bulb,
             R.drawable.projector,
-            R.drawable.fans
+            R.drawable.fan
     };
 
     private OnSelectAppliancesFragmentListener mListener;
@@ -53,7 +53,7 @@ public class ApplianceGridFragment extends Fragment {
     void initFragment(){
 
         HomeGridRecylerAdapter adapter = new HomeGridRecylerAdapter(getContext(), applianceIcons,
-                getResources().getStringArray(R.array.appliance_names), Glide.with(this));
+                getResources().getStringArray(R.array.appliance_names), Glide.with(this), this);
         homeGridRecyclerview.setHasFixedSize(true);
         homeGridRecyclerview.setLayoutManager(new GridLayoutManager(getContext(), 2));
         homeGridRecyclerview.setAdapter(adapter);
@@ -83,6 +83,11 @@ public class ApplianceGridFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onGridClicked(int position) {
+        mListener.onGridClicked(position);
     }
 
     public interface OnSelectAppliancesFragmentListener {

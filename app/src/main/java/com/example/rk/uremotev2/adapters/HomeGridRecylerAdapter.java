@@ -1,6 +1,7 @@
 package com.example.rk.uremotev2.adapters;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,12 +22,14 @@ public class HomeGridRecylerAdapter extends RecyclerView.Adapter<HomeGridRecyler
     private int[] images;
     private String[] title;
     private RequestManager glide;
+    private HomeGridRecyclerListener mListener;
 
-    public HomeGridRecylerAdapter(Context context, int[] images, String[] title, RequestManager glide) {
+    public HomeGridRecylerAdapter(Context context, int[] images, String[] title, RequestManager glide, HomeGridRecyclerListener mListener) {
         this.context = context;
         this.images = images;
         this.title = title;
         this.glide = glide;
+        this.mListener = mListener;
     }
 
     @Override
@@ -45,7 +48,7 @@ public class HomeGridRecylerAdapter extends RecyclerView.Adapter<HomeGridRecyler
         return title.length;
     }
 
-    public class HomeGridViewHolder extends RecyclerView.ViewHolder {
+    public class HomeGridViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.home_grid_image)
         ImageView homeGridImage;
@@ -55,8 +58,8 @@ public class HomeGridRecylerAdapter extends RecyclerView.Adapter<HomeGridRecyler
         public HomeGridViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(this);
         }
-
 
         public void bindItems(int position) {
             glide.load(images[position])
@@ -65,5 +68,14 @@ public class HomeGridRecylerAdapter extends RecyclerView.Adapter<HomeGridRecyler
 
             homeGridText.setText(title[position]);
         }
+
+        @Override
+        public void onClick(View v) {
+            mListener.onGridClicked(getAdapterPosition());
+        }
+    }
+
+    public interface HomeGridRecyclerListener {
+        void onGridClicked(int position);
     }
 }
