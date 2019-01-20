@@ -10,6 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.TransitionOptions;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.rk.uremotev2.R;
 import com.example.rk.uremotev2.fragments.ApplianceGridFragment;
 
@@ -63,7 +66,7 @@ public class HomeGridRecylerAdapter extends RecyclerView.Adapter<HomeGridRecyler
 
         public void bindItems(int position) {
             glide.load(images[position])
-                    .crossFade()
+                    .transition(new DrawableTransitionOptions().crossFade())
                     .into(homeGridImage);
 
             homeGridText.setText(title[position]);
